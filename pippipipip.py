@@ -58,7 +58,7 @@ fire = mixer.Sound('otskok-myacha.mp3')
 racket1 = Player('racket.png', 30, 200, 4, 50, 150)  # Левая ракетка (игрок 1).
 racket2 = Player('racket.png', 520, 200, 4, 50, 150)  # Правая ракетка (игрок 2).
 ball = GameSprite('tenis_ball.png', 200, 200, 4, 50, 50)  # Мяч.
-
+speedb= 4
 font.init()  # Инициализируем модуль шрифтов PyGame.
 font = font.Font(None, 35)  # Создаем шрифт размером 35 пикселей.
 lose1 = font.render('PLAYER 1 LOSE!', True, (180, 0, 0))  # Текст о поражении игрока 1.
@@ -82,11 +82,23 @@ while game:  # Основной игровой цикл.
         if sprite.collide_rect(racket1, ball) or sprite.collide_rect(racket2, ball):  # Если мяч столкнулся с одной из ракеток.
             speed_x *= -1  # Меняем направление движения мяча по горизонтали.
             speed_y *= 1   # Оставляем прежнее вертикальное направление.
+            if speed_x > 0 and speed_y > 0:
+                speed_y += 0.1
+                speed_x += 0.1
+            else:
+                speed_y -= 0.1
+                speed_x -= 0.1
             fire.play()
         
         # если мяч достиг верхней или нижней границы экрана, отражаем его обратно
         if ball.rect.y > win_height-50 or ball.rect.y < 0:
             speed_y *= -1  # Изменение направления движения мяча по вертикали.
+            if speed_x > 0 and speed_y > 0:
+                speed_y += 0.1
+                speed_x += 0.1
+            else:
+                speed_y -= 0.1
+                speed_x -= 0.1
             fire.play()
 
         # проверка вылета мяча за пределы поля
